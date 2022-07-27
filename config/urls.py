@@ -4,12 +4,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
-    path('', include('users.urls')),
-    path('', include('shop.urls')),
-    path('', include('blogs.urls')),
-    path('', include('orders.urls')),
+    path('users/', include('users.urls')),
+    path('shop/', include('shop.urls')),
+    path('blogs/', include('blogs.urls')),
+    path('orders/', include('orders.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
