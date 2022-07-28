@@ -24,7 +24,7 @@
             <i class="fa fa-star"></i>
             <i class="fa fa-star-o"></i>
         </div>
-        <h5>${{ product.get_price }} {% if product.is_discount %}
+        <h5>${{ product.real_price }} {% if product.is_discount %}
             <del class="text-secondary ">{{ product.price }}</del>
             {% endif %}
         </h5>

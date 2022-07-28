@@ -102,10 +102,6 @@ class ProductModel(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
 
-    def get_price(self):
-        if self.discount:
-            return ((100 - self.discount) / 100) * self.price
-        return self.price
 
     def is_discount(self):
         return bool(self.discount)
