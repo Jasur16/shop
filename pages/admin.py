@@ -12,7 +12,7 @@ class ContactModelAdmin(admin.ModelAdmin):
 
 @admin.register(BannerModel)
 class BannerModelAdmin(admin.ModelAdmin):
-    list_display = ['title', 'collections']
+    list_display = ['title', 'collections', 'is_active']
     list_display_links = ['title', 'collections']
     search_fields = ['title', 'collections']
     list_filter = ['created_at']
