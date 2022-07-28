@@ -57,7 +57,7 @@ class ColorModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('created at'))
 
     def __str__(self):
-        return self.name
+        return self.code
 
     class Meta:
         verbose_name = 'color'
