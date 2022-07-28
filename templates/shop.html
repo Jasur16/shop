@@ -6,6 +6,7 @@
             cursor: pointer;
         }
     </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
 {% endblock %}
 
 {% block content %}
@@ -84,6 +85,8 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
     <script>
         function addUrlParameter(name, value){
             let searchParameter = new URLSearchParams(window.location.search)
@@ -95,5 +98,14 @@
 
             window.location.search = searchParameter.toString()
         }
+        $(".js-range-slider").ionRangeSlider({
+            type: "double",
+            min: {{ min_price }},
+            max: {{ max_price }},
+            from: 50,
+            to: 70,
+            grid: true,
+            prefix: "$"
+    });
     </script>
 {% endblock %}

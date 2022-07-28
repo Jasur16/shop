@@ -93,24 +93,19 @@
                             <div class="product__details__option">
                                 <div class="product__details__option__size">
                                     <span>Size:</span>
-                                    <label for="xxl">xxl
-                                        <input type="radio" id="xxl">
+                                    {% for size in object.sizes.all %}
+                                    <label for="{{ size.name }}">{{ size.name }}
+                                        <input type="radio" id="{{ size.name }}">
                                     </label>
-                                    <label class="active" for="xl">xl
-                                        <input type="radio" id="xl">
-                                    </label>
-                                    <label for="l">l
-                                        <input type="radio" id="l">
-                                    </label>
-                                    <label for="sm">s
-                                        <input type="radio" id="sm">
-                                    </label>
+                                    {% endfor %}
                                 </div>
                                 <div class="product__details__option__color">
                                     <span>Color:</span>
-                                    <label class="c-1" for="">
-                                        <input type="radio" id="">
+                                    {% for color in object.colors.all %}
+                                    <label style="background-color: {{ color.code }}" for="{{ color.code }}">
+                                        <input type="radio" id="{{ color.code }}">
                                     </label>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="product__details__cart__option">
