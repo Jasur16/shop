@@ -36,7 +36,11 @@
                 <div class="col-lg-6 col-md-5">
                     <div class="header__top__right">
                         <div class="header__top__links">
+                            {% if request.user.is_authenticated %}
+                            <a href="#">Log out</a>
+                            {% else %}
                             <a href="#">Sign in</a>
+                            {% endif %}
                             <a href="#">FAQs</a>
                         </div>
                         <div class="header__top__hover">
