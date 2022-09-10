@@ -1,4 +1,16 @@
-{% load static %}
+{% load static i18n %}
+{% load my_tags %}
+{% block extra_css %}
+<style>
+    .text_lang:hover {
+        background: #0b0b0b !important;
+    }
+
+    .text_lang:hover a {
+        color: white !important;
+    }
+</style>
+{% endblock %}
 <!-- Offcanvas Menu Begin -->
 <div class="offcanvas-menu-overlay"></div>
 <div class="offcanvas-menu-wrapper">
@@ -18,7 +30,9 @@
     </div>
     <div class="offcanvas__nav__option">
         <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
+        {% if request.user.is_authenticated %}
         <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
+        {% endif %}
         <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
         <div class="price">$0.00</div>
     </div>
@@ -44,11 +58,19 @@
                             <a href="#">FAQs</a>
                         </div>
                         <div class="header__top__hover">
-                            <span>EN <i class="arrow_carrot-down"></i></span>
+                            {% get_current_language as LANGUAGE_CODE %}
+                            <span>{{LANGUAGE_CODE}} <i class="arrow_carrot-down"></i></span>
+                            {% get_available_languages as LANGUAGES %}
                             <ul>
-                                <li>EN</li>
-                                <li>UZ</li>
-                                <li>RU</li>
+                                {% for lang in LANGUAGES %}
+                                {% if lang.0 != LANGUAGE_CODE %}
+                                <li class="text_lang">
+                                    <a href="/{{lang.0}}/{{request.path|slice:'4:'}}">
+                                        {{lang.0|upper}}
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
@@ -66,19 +88,25 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="{% if request.path == '/' %}active{% endif %}"><a href="{% url 'pages:home' %}">Home</a></li>
-                        <li class="{% if request.path == '/shop/' %}active{% endif %}"><a href="{% url 'shop:home' %}">Shop</a></li>
-                        <li class="{% if request.path == '/blogs/' %}active{% endif %}"><a href="{% url 'blogs:posts' %}">Blog</a></li>
-                        <li class="{% if request.path == '/contact/' %}active{% endif %}"><a href="{% url 'pages:contact' %}">Contacts</a></li>
+                        <li class="{% if request.path == '/' %}active{% endif %}"><a
+                                href="{% url 'pages:home' %}">{% trans 'Главная' %}</a></li>
+                        <li class="{% if request.path == '/shop/' %}active{% endif %}">
+                            <a href="{% url 'shop:home' %}">{% trans 'Товары' %}</a>
+                        </li>
+                        <li class="{% if request.path == '/blogs/' %}active{% endif %}"><a
+                                href="{% url 'blogs:posts' %}">{% trans 'Блог' %}</a></li>
+                        <li class="{% if request.path == '/contact/' %}active{% endif %}"><a
+                                href="{% url 'pages:contact' %}">{% trans 'Контакты' %}</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option">
                     <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
-                    <a href="#"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
-                    <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>0</span></a>
-                    <div class="price">$0.00</div>
+                    <a href="{% url 'shop:all_wishlists' %}"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
+                    {% cart_info request as info %}
+                    <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{ info.0 }}</span></a>
+                    <div class="price">${{ info.1 }}</div>
                 </div>
             </div>
         </div>

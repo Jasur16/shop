@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
 from django.utils import timezone
 from django.db import models, IntegrityError
 from django.utils.translation import gettext_lazy as _
@@ -111,6 +112,13 @@ class ProductModel(models.Model):
 
     def new(self):
         return (timezone.now() - self.created_at).days <= 5
+
+    @staticmethod
+    def get_cart_info(request):
+        cart = request.session.get('cart', [])
+        if not cart:
+            return 0, 0.0
+        return len(cart), ProductModel.objects.filter(id__in=cart).aggregate(Sum('real_price'))['real_price__sum']
 
     def __str__(self):
         return self.title
