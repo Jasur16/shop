@@ -51,6 +51,7 @@
                     <div class="header__top__right">
                         <div class="header__top__links">
                             {% if request.user.is_authenticated %}
+                            <a href="">Order History</a>
                             <a href="{% url 'user:profile' %}">Profile</a>
                             <a href="{% url 'user:logout' %}">Log out</a>
                             {% else %}
@@ -83,7 +84,7 @@
         <div class="row">
             <div class="col-lg-3 col-md-3">
                 <div class="header__logo">
-                    <a href="./index.html"><img src="{% static 'img/logo.png' %}" alt=""></a>
+                    <a href="{% url 'pages:home' %}"><img src="{% static 'img/logo.png' %}" alt=""></a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
@@ -106,7 +107,7 @@
                     <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
                     <a href="{% url 'shop:all_wishlists' %}"><img src="{% static 'img/icon/heart.png' %}" alt=""></a>
                     {% cart_info request as info %}
-                    <a href="#"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{ info.0 }}</span></a>
+                    <a href="{% url 'shop:shopping-cart' %}"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{ info.0 }}</span></a>
                     <div class="price">${{ info.1 }}</div>
                 </div>
             </div>

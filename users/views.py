@@ -1,12 +1,21 @@
 from django.core.exceptions import ValidationError
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views.generic import UpdateView
 from .forms import RegistrationsForm, LoginForm, ProfileForm
 from django.contrib.auth import login, logout, authenticate
+from .models import ProfileModel
 
 
 class ProfileView(UpdateView):
     template_name = 'profile.html'
+    form_class = ProfileForm
+
+    def get_success_url(self):
+        return reverse('user:profile')
+
+    def get_object(self, queryset=None):
+        profile, created = ProfileModel.objects.get_or_create(user=self.request.user)
+        return profile
 
 
 def logout_view(request):

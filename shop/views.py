@@ -99,4 +99,11 @@ def update_cart_view(request, id):
 
     request.session['cart'] = cart
     return redirect(request.GET.get('next', '/'))
-    
+
+
+class ShoppingCart(ListView):
+    template_name = 'shopping-cart.html'
+
+    def get_queryset(self):
+        products = ProductModel.get_cart_objects(self.request)
+        return products
