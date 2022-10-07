@@ -41,6 +41,8 @@ class CheckoutView(CreateView):
         order.total_price = price
         order.products.set(products)
         order.save()
+        
+        self.request.session['cart'] = []
 
         self.request.session['cart'] = []
         return super().form_valid(form)
